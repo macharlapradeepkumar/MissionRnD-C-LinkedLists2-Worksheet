@@ -18,7 +18,24 @@ struct node {
 	int num;
 	struct node *next;
 };
-
+typedef struct node *lptr;
 struct node * insertAtEveryKthNode(struct node *head, int K) {
-	return NULL;
-}
+	 lptr j;
+	lptr p = head;
+	if (p == NULL || K <= 0) return NULL;
+	int l = 0;
+	  while (p != NULL){
+		  l++;
+		if (l==K){
+			 j = (lptr )malloc(sizeof(struct node));
+			 j->num = K;
+			 j->next = p->next;
+			 p->next = j;
+			 p = p->next;
+			 l = 0;
+			 }  
+		 p = p->next;   
+	 }  
+	  return head;
+	}
+ 
