@@ -10,7 +10,6 @@ ERROR CASES: Return NULL for error cases.
 
 NOTES:
 */
-
 #include <stdio.h>
 #include<malloc.h>
 struct node {
@@ -18,31 +17,57 @@ struct node {
 	struct node *next;
 };
 typedef struct node *lptr;
+lptr insertend(lptr first, int x);
 struct node * merge2LinkedLists(struct node *head1, struct node *head2) {
-	lptr p = head1, q = head2, j, r=head1;
+	struct node *head=NULL;
+	lptr p = head1, q = head2;
 	if (p == NULL && q == NULL) return NULL;
 	if (p == NULL&&q != NULL) return head2;
 	if (p != NULL&&q == NULL) return head1;
+
 	while (p != NULL&&q != NULL){
-		if (p->num <= q->num){
-			r = p;
+		if (p->num < q->num)
+		{
+			head = insertend(head, p->num);
 			p = p->next;
 		}
-		else{
-			j = (lptr)malloc(sizeof(struct node));
-			j->num = q->num;
-			j->next = p;
-			r->next = j;
+		else
+		{
+			head= insertend(head, q->num);
 			q = q->next;
 		}
 	}
+	while (p != NULL)
+	{
+
+
+		head= insertend(head, p->num);
+		p = p->next;
+	}
 	while (q != NULL){
-	  j = (lptr)malloc(sizeof(struct node));
-		j->num = q->num;
-		j->next = NULL;
-		r->next = j;
-		r = r->next;
+		head = insertend(head, q->num);
 		q = q->next;
 	}
-	return head1;
+	return head;
+
 }
+lptr insertend(lptr first, int x){
+	lptr s, t;
+	s = (lptr)malloc(sizeof(struct node));
+	s->num = x;
+	s->next = NULL;
+	if (first == NULL)
+	{
+		first = s;
+		return first;
+
+	}
+	t = first;
+	while (t->next != NULL){
+		t = t->next;
+	}
+	t->next = s;
+	return first;
+}
+	
+		
